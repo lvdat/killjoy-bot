@@ -37,14 +37,17 @@ const parseData = (type, rank) => {
     }
 }
 
-const Embed = (data, author) => new EmbedBuilder()
-    .setColor(0x0099FF)
+const Embed = (data, author, voice, inviteURL) => new EmbedBuilder()
+    .setColor(13250094)
     .setAuthor({ name: author.username, iconURL: `https://cdn.discordapp.com/avatars/${author.id}/${author.avatar}.png?size=256` })
     // .setDescription('Some description here')
     .setThumbnail(data.rank)
     .addFields(
         { name: 'Chế độ chơi', value: data.type },
-        { name: '\u200B', value: '\u200B' },
+        //{ name: '\u200B', value: '\u200B' },
+    )
+    .addFields(
+        { name: voice.name + ' (' + voice.members.size + '/' + voice.userLimit + ')', value: `[Click để Tham gia phòng này!](${inviteURL})` },
     )
     //.setImage('https://i.imgur.com/AfFp7pu.png')
     //.setTimestamp()
@@ -66,20 +69,24 @@ module.exports = {
                 .addChoices({ name: 'Radiant', value: 'radiant' }, { name: 'Immortal', value: 'immortal' }, { name: 'Ascendant', value: 'ascendant' }, { name: 'Diamond', value: 'diamond' }, { name: 'Platinum', value: 'platinum' }, { name: 'Gold', value: 'radiant' }, { name: 'Silver', value: 'silver' }, { name: 'Bronze', value: 'bronze' }, { name: 'Iron', value: 'iron' }, { name: 'Unrated', value: 'unrated' })),
     async execute(interaction) {
         if (!interaction.member.voice.channel) {
-            return await interaction.reply({ content: 'Bạn cần vào một kênh thoại trước khi dùng lệnh này', ephemeral: true })
+            await interaction.reply({ content: 'Bạn cần vào một kênh thoại trước khi dùng lệnh này', ephemeral: true })
         } else {
             const rank = interaction.options.getString('rank')
             const type = interaction.options.getString('type')
             const author = interaction.user
+            const voice = interaction.member.voice.channel
+            const invite = await voice.createInvite({
+                maxAge: 10 * 60 * 1000, // maximum time for the invite, in milliseconds
+                maxUses: 10,
+            })
+            const inviteURL = 'https://discord.gg/' + invite.code
             const data = parseData(type, rank)
             console.log({
-                rank,
-                type,
-                author,
-                data
+                voice,
+                inviteURL,
             })
             console.log(type)
-            await interaction.reply({embeds: [Embed(data, author)]});
+            await interaction.reply({embeds: [Embed(data, author, voice, inviteURL)]});
         }
     },
 };

@@ -7,7 +7,9 @@ const { generateDependencyReport } = require('@discordjs/voice');
 console.log(generateDependencyReport());
 
 const TOKEN = process.env.BOT_TOKEN
-const client = new Client({ intents: [GatewayIntentBits.Guilds] }) // prepare client
+const client = new Client({ 
+    intents: 3241725 // xD full intents ??
+  }) // prepare client
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
@@ -66,6 +68,14 @@ client.on(Events.InteractionCreate, async interaction => {
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
         }
     }
+});
+
+client.on("voiceStateUpdate", (oldVoiceState, newVoiceState) => { // Listeing to the voiceStateUpdate event
+    if (newVoiceState.channel) { // The member connected to a channel.
+        console.log(`${newVoiceState.member.user.tag} connected to ${newVoiceState.channel.name}.`);
+    } else if (oldVoiceState.channel) { // The member disconnected from a channel.
+        console.log(`${oldVoiceState.member.user.tag} disconnected from ${oldVoiceState.channel.name}.`)
+    };
 });
 
 client.login(TOKEN) // connect to Discord
