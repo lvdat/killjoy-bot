@@ -81,11 +81,11 @@ module.exports = {
             })
             const inviteURL = 'https://discord.gg/' + invite.code
             const data = parseData(type, rank)
-            console.log({
-                voice,
-                inviteURL,
-            })
-            console.log(type)
+            // console.log({   
+            //     inviteURL,
+            //     data
+            // })
+            // console.log(type)
             await interaction.reply({embeds: [Embed(data, author, voice, inviteURL)]});
         }
     },
