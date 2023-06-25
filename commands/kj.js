@@ -66,7 +66,7 @@ module.exports = {
             option.setName('rank')
                 .setDescription('chọn Rank muốn tìm')
                 .setRequired(true)
-                .addChoices({ name: 'Radiant', value: 'radiant' }, { name: 'Immortal', value: 'immortal' }, { name: 'Ascendant', value: 'ascendant' }, { name: 'Diamond', value: 'diamond' }, { name: 'Platinum', value: 'platinum' }, { name: 'Gold', value: 'radiant' }, { name: 'Silver', value: 'silver' }, { name: 'Bronze', value: 'bronze' }, { name: 'Iron', value: 'iron' }, { name: 'Unrated', value: 'unrated' })),
+                .addChoices({ name: 'Radiant', value: 'radiant' }, { name: 'Immortal', value: 'immortal' }, { name: 'Ascendant', value: 'ascendant' }, { name: 'Diamond', value: 'diamond' }, { name: 'Platinum', value: 'platinum' }, { name: 'Gold', value: 'gold' }, { name: 'Silver', value: 'silver' }, { name: 'Bronze', value: 'bronze' }, { name: 'Iron', value: 'iron' }, { name: 'Unrated', value: 'unrated' })),
     async execute(interaction) {
         if (!interaction.member.voice.channel) {
             await interaction.reply({ content: 'Bạn cần vào một kênh thoại trước khi dùng lệnh này', ephemeral: true })
