@@ -5,7 +5,7 @@
     "main": "index.js",
     "author": "lvdat",
     "license": "MIT",
-    "script": {
+    "scripts": {
         "start": "node index"
     },
     "dependencies": {
